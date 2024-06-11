@@ -1,1 +1,0 @@
-SELECT * FROM gestion_db.users;
