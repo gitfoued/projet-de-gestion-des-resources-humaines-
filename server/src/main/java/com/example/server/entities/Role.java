@@ -25,6 +25,9 @@ public class Role {
         this.creationDate = creationDate;
     }
 
+    public Role() {
+    }
+
     public Integer getId() {
         return id;
     }

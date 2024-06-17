@@ -1,5 +1,6 @@
 package com.example.server.entities;
 import jakarta.persistence.*;
+
 @Entity
 @Table(name = "departments")
 public class Department {
@@ -16,6 +17,8 @@ public class Department {
     @Column(name = "department_head", nullable = false)
     private String departmentHead;
 
+
+    public Department() {}
     public Department(String name, String description, String departmentHead) {
         this.name = name;
         this.description = description;
@@ -53,5 +56,8 @@ public class Department {
     public void setDepartmentHead(String departmentHead) {
         this.departmentHead = departmentHead;
     }
+
+
+
 }
 
