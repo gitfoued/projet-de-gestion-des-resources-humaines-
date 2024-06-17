@@ -32,6 +32,9 @@ public class Abscence {
         this.reason = reason;
     }
 
+    public Abscence() {
+    }
+
     public Integer getId() {
         return id;
     }

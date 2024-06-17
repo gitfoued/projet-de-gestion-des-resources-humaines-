@@ -56,8 +56,13 @@ public class Empolyee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Integer getId() {
-        return id;
+    public Empolyee() {
+
+    }
+
+
+    public Long getId() {
+        return Long.valueOf(id);
     }
 
     public void setId(Integer id) {
