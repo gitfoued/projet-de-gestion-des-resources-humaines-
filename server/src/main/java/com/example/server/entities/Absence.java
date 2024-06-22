@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "absences")
-public class Abscence {
+public class Absence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +25,14 @@ public class Abscence {
 
     private String reason;
 
-    public Abscence(Empolyee employee, Department department, Date absenceDate, String reason) {
+    public Absence(Empolyee employee, Department department, Date absenceDate, String reason) {
         this.employee = employee;
         this.department = department;
         this.absenceDate = absenceDate;
         this.reason = reason;
     }
 
-    public Abscence() {
+    public Absence() {
     }
 
     public Integer getId() {

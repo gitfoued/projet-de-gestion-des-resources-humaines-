@@ -42,7 +42,7 @@ public class EmpolyeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Empolyee> getEmployeeById(@PathVariable Long id) {
+    public ResponseEntity<Empolyee> getEmployeeById(@PathVariable Integer id) {
         Empolyee employee = employeeService.getEmployeeById(id);
         if (employee != null) {
             return new ResponseEntity<>(employee, HttpStatus.OK);
@@ -52,7 +52,7 @@ public class EmpolyeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable Integer id) {
         try {
             employeeService.deleteEmployee(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

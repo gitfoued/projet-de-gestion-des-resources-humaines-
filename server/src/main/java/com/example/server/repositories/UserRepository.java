@@ -4,7 +4,9 @@ import com.example.server.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    // Vous pouvez ajouter des méthodes personnalisées si nécessaire
+public interface UserRepository extends JpaRepository<User, Integer> {
+    Optional<User> findByEmail(String Email);
 }

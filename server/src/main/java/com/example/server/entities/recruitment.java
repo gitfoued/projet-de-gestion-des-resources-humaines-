@@ -27,6 +27,9 @@ public class recruitment {
         this.recruitmentEndDate = recruitmentEndDate;
     }
 
+    public recruitment() {
+    }
+
     public Integer getId() {
         return id;
     }

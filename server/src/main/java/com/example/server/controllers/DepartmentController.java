@@ -26,7 +26,7 @@ public class DepartmentController {
 
     // Afficher les détails d'un département spécifique
     @GetMapping("/{id}")
-    public ResponseEntity<DepartmentDetail> getDepartmentById(@PathVariable Long id) {
+    public ResponseEntity<DepartmentDetail> getDepartmentById(@PathVariable Integer id) {
         try {
             DepartmentDetail departmentDetail = departmentService.getDepartmentById(id);
             return ResponseEntity.ok(departmentDetail);
@@ -48,7 +48,7 @@ public class DepartmentController {
 
     // Supprimer un département
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDepartment(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDepartment(@PathVariable Integer id) {
         try {
             departmentService.deleteDepartment(id);
             return ResponseEntity.noContent().build();

@@ -24,6 +24,9 @@ public class overtime {
     @Column(name = "overtime_date")
     private Date overtimeDate;
 
+    public overtime() {
+    }
+
     public overtime(Empolyee employee, Department department, Float overtimeHours, Date overtimeDate) {
         this.employee = employee;
         this.department = department;
