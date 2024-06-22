@@ -43,6 +43,10 @@ public class Empolyee {
     @Column(name = "date_of_birth", nullable = false)
     private Date dateOfBirth;
 
+    public Empolyee() {
+
+    }
+
     public Empolyee(String firstName, String lastName, String email, String phoneNumber, Date hireDate, BigDecimal salary, Department department, Role role, String address, Date dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -56,13 +60,10 @@ public class Empolyee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Empolyee() {
-
-    }
 
 
-    public Long getId() {
-        return Long.valueOf(id);
+    public Integer getId() {
+        return id;
     }
 
     public void setId(Integer id) {

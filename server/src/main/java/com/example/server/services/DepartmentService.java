@@ -31,8 +31,8 @@ public class DepartmentService {
                 .toList();
     }
 
-    public DepartmentDetail getDepartmentById(Long id) {
-        Optional<Department> departmentOpt = departmentRepository.findById(id);
+    public DepartmentDetail getDepartmentById(Integer id) {
+        Optional<Department> departmentOpt = departmentRepository.findById(Long.valueOf(id));
         if (departmentOpt.isPresent()) {
             Department department = departmentOpt.get();
             List<Empolyee> employees = employeeService.findByDepartmentId(Long.valueOf(department.getId()));
@@ -47,8 +47,8 @@ public class DepartmentService {
         return departmentRepository.save(department);
     }
 
-    public void deleteDepartment(Long id) {
-        departmentRepository.deleteById(id);
+    public void deleteDepartment(Integer id) {
+        departmentRepository.deleteById(Long.valueOf(id));
     }
 
     private void validateDepartment(Department department) {

@@ -24,7 +24,7 @@ public class EmpolyeeService {
         validateEmployee(employee);
 
         if (employee.getId() != null) {
-            Optional<Empolyee> existingEmployee = employeeRepository.findById(employee.getId());
+            Optional<Empolyee> existingEmployee = employeeRepository.findById(Long.valueOf(employee.getId()));
             if (existingEmployee.isPresent()) {
                 if (!existingEmployee.get().getEmail().equals(employee.getEmail())) {
                     if (employeeRepository.findByEmail(employee.getEmail()).isPresent()) {
@@ -60,13 +60,13 @@ public class EmpolyeeService {
             throw new IllegalArgumentException("Role is required");
         }
     }
-    public Empolyee getEmployeeById(Long id) {
-        Optional<Empolyee> employee = employeeRepository.findById(id);
+    public Empolyee getEmployeeById(Integer id) {
+        Optional<Empolyee> employee = employeeRepository.findById(Long.valueOf(id));
         return employee.orElse(null);
     }
 
-    public void deleteEmployee(Long id) {
-        employeeRepository.deleteById(id);
+    public void deleteEmployee(Integer id) {
+        employeeRepository.deleteById(Long.valueOf(id));
     }
 
     public Page<Empolyee> getAllEmployees(Pageable pageable) {

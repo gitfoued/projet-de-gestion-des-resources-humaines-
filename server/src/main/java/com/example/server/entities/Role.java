@@ -1,5 +1,7 @@
 package com.example.server.entities;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -16,16 +18,15 @@ public class Role {
     private String description;
 
     @Column(name = "creation_date", nullable = false)
-    private Date creationDate;
+    private LocalDate creationDate;;
 
-
+    public Role() {
+        this.creationDate = LocalDate.now();
+    }
     public Role(String name, String description, Date creationDate) {
         this.name = name;
         this.description = description;
-        this.creationDate = creationDate;
-    }
-
-    public Role() {
+        this.creationDate = LocalDate.now();
     }
 
     public Integer getId() {
@@ -52,13 +53,12 @@ public class Role {
         this.description = description;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
-
 }
 
