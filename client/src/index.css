@@ -1,13 +1,41 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Ajouter ce CSS personnalisé dans votre fichier CSS principal */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.sinusoidal-container {
+  position: relative;
+  width: 27%;
+  height: 4px; /* Hauteur de la ligne sinusoïdale */
+  overflow: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.sinusoidal-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(to right, transparent 5%,yellow 5%, black 50%);
+  background-size: 200% 100%; /* Double la largeur pour l'effet de transition */
+  animation: drawSinusoidal 3s forwards; /* Animation de dessin */
 }
+
+
+@keyframes drawSinusoidal {
+  to {
+    background-position: -100% 0; /* Déplace le fond pour dessiner la ligne */
+  }
+}
+@keyframes animateCircles {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
