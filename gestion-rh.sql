@@ -67,3 +67,13 @@ CREATE TABLE overtime (
     FOREIGN KEY (employee_id) REFERENCES employees(id),
     FOREIGN KEY (department_id) REFERENCES departments(id)
 );
+select * from overtime;
+INSERT INTO absences (employee_id, department_id, absence_date, reason)
+VALUES (1, 1, '2024-01-15', 'Sick leave');
+
+
+INSERT INTO absences (employee_id, department_id, absence_date, reason)
+VALUES (2, 2, '2024-02-10', 'Personal reasons');
+
+INSERT INTO absences (employee_id, department_id, absence_date, reason)
+VALUES (3, 1, '2024-03-20', 'Medical appointment');
