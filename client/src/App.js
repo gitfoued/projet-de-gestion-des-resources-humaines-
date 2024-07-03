@@ -1,11 +1,19 @@
-import React from 'react'
-import Anim_page from "./Pages/Anim_page";
-function App() {
+
+import React from 'react';
+import { Component } from 'react';
+import Login from './Auth/Login';
+class App extends Component {
+ render(){
   return (
-    <div>
-    <Anim_page/>
-    </div>
-  );
+    <>
+    <Login/>
+    </>
+      
+
+    
+  )
+ }
+  
 }
 
 export default App;
