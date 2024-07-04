@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-@NoArgsConstructor
+
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
@@ -43,6 +43,14 @@ public class User implements UserDetails {
     private Date lastLoginDate;
 
 
+
+    public User(String username, String password, String email, Role role, String lastName) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.lastName = lastName;
+    }
 
     @Override
     public boolean isAccountNonExpired() {

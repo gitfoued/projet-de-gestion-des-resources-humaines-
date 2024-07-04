@@ -1,8 +1,7 @@
 package com.example.server.entities;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "roles")
@@ -12,18 +11,25 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false , unique = true)
     private String name;
 
     private String description;
 
     @Column(name = "creation_date", nullable = false)
-    private LocalDate creationDate;;
+    private LocalDate creationDate;
 
     public Role() {
         this.creationDate = LocalDate.now();
     }
-    public Role(String name, String description, Date creationDate) {
+
+    // Constructor that takes a name as an argument
+    public Role(String name) {
+        this.name = name;
+        this.creationDate = LocalDate.now();
+    }
+
+    public Role(String name, String description) {
         this.name = name;
         this.description = description;
         this.creationDate = LocalDate.now();
@@ -61,4 +67,3 @@ public class Role {
         this.creationDate = creationDate;
     }
 }
-
