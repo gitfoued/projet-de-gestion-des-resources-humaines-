@@ -29,10 +29,10 @@ export default function Signup() {
         email: !emailValid ? 'Invalid email address' : '',
       });
     } else {
+      console.log(values)
       axios.post('http://localhost:5000/auth/register', values)
         .then((res) => {
-          console.log(res.data);
-          if (res.data === 'Success') {
+          if (res.status === 200) {
             console.log('Success');
           } else {
             alert('Erreur');

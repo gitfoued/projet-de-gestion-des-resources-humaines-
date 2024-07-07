@@ -1,3 +1,4 @@
+
 package com.example.server.config;
 
 import com.example.server.entities.User;
@@ -26,9 +27,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     @Override
     protected void doFilterInternal(
-         @NonNull HttpServletRequest request,
-         @NonNull  HttpServletResponse response,
-         @NonNull  FilterChain filterChain)
+            @NonNull HttpServletRequest request,
+            @NonNull  HttpServletResponse response,
+            @NonNull  FilterChain filterChain)
             throws ServletException, IOException {
         final String authHeader= request.getHeader("Authorization");
         final String Jwt;
