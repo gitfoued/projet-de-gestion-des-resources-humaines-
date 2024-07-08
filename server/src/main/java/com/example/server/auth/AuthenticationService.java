@@ -5,6 +5,9 @@ import com.example.server.repositories.RoleRepository;
 import com.example.server.services.JwtService;
 import com.example.server.entities.User;
 import com.example.server.entities.Role;
+import com.example.server.token.Token;
+import com.example.server.token.TokenRepository;
+import com.example.server.token.TokenType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +20,7 @@ import java.util.Optional;
 public class AuthenticationService {
     private final UserRepository repository;
     private final RoleRepository roleRepository;
+    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -63,16 +67,18 @@ public class AuthenticationService {
         repository.save(user);
 
         // Générez le token JWT
+        var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
 
+        saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtToken)
+
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
-        System.out.println("Authenticating user with email: " + request.getEmail());
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -83,8 +89,21 @@ public class AuthenticationService {
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
 
+        saveUserToken(user, jwtToken);
+        System.out.println(jwtToken);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtToken)
                 .build();
+    }
+
+    private void saveUserToken(User user, String jwtToken) {
+        var token = Token.builder()
+                .user(user)
+                .token(jwtToken)
+                .tokenType(TokenType.BEARER)
+                .expired(false)
+                .revoked(false)
+                .build();
+        tokenRepository.save(token);
     }
 }
