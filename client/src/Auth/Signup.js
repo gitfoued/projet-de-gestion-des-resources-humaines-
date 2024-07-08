@@ -29,7 +29,6 @@ export default function Signup() {
         email: !emailValid ? 'Invalid email address' : '',
       });
     } else {
-      console.log(values)
       axios.post('http://localhost:5000/auth/register', values)
         .then((res) => {
           if (res.status === 200) {
@@ -43,7 +42,6 @@ export default function Signup() {
         });
     }
   };
-
   return (
     <div className="bg-indigo-900 h-screen flex flex-col items-center justify-center overflow-hidden">
       <h1 className="mt-[80px] text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-red-500 to-pink-500">
