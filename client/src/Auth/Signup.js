@@ -33,6 +33,7 @@ export default function Signup() {
         .then((res) => {
           if (res.status === 200) {
             console.log('Success');
+            console.log(res.data);
           } else {
             alert('Erreur');
           }

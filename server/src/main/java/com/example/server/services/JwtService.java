@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class JwtService {
 
 
-    @Value("${SECRET_KEY}")
+    @Value("${secret-key}")
     private String secretKey;
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
@@ -84,7 +84,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        byte[] keyBytes = Decoders.BASE64.decode(String.valueOf(secretKey));
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
