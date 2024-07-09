@@ -28,8 +28,8 @@ export default function Login() {
         } else {
             axios.post('http://localhost:5000/auth/Login', values)
                 .then((res) => {
-                    console.log('Response data:', res);
-                    const token = res.data.token;
+                    console.log('Response data:', res.data);
+                    const token = res.data.access_token;
                     if (token) {
                         localStorage.setItem('monToken', token);
                     } else {

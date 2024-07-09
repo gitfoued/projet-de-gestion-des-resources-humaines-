@@ -73,27 +73,50 @@ public class AuthenticationService {
         saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
-
                 .build();
     }
 
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
-        var user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        // Log avant l'authentification
+        System.out.println("Authenticating user with email: " + request.getEmail());
 
-        saveUserToken(user, jwtToken);
-        System.out.println(jwtToken);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .build();
+        // Authentification avec l'authenticationManager
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+            System.out.println("Authentication successful for email: " + request.getEmail());
+        } catch (Exception e) {
+            System.out.println("Authentication failed for email: " + request.getEmail());
+            e.printStackTrace(); // Log the exception stack trace for further investigation
+            throw e; // Relancer l'exception pour la gestion d'erreur appropriée
+        }
+
+
+        var userOptional = repository.findByEmail(request.getEmail());
+        if (userOptional.isPresent()) {
+            var user = userOptional.get();
+            System.out.println("User found: " + user.getEmail());
+
+            // Génération du token JWT
+            var jwtToken = jwtService.generateToken(user);
+            System.out.println("Generated JWT token: " + jwtToken);
+
+            // Sauvegarde du token
+            saveUserToken(user, jwtToken);
+            System.out.println("Token saved for user: " + user.getEmail());
+
+            return AuthenticationResponse.builder()
+                    .accessToken(jwtToken)
+                    .build();
+        } else {
+            System.out.println("User not found for email: " + request.getEmail());
+            throw new RuntimeException("User not found");
+        }
     }
 
     private void saveUserToken(User user, String jwtToken) {

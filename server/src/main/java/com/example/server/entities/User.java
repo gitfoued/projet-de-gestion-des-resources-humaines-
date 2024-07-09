@@ -10,12 +10,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-@Builder
+@Entity
 @Getter
 @Setter
-
+@NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Builder
 @Table(name = "users")
 public class User implements UserDetails {
 
