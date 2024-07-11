@@ -33,7 +33,8 @@ public class SecurityConfiguration {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Définir la politique de création de session à STATELESS
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**").permitAll() // Permettre les requêtes non authentifiées pour les routes d'authentification
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/api/employees/**").permitAll() // Permettre les requêtes non authentifiées pour les routes d'authentification
                         .anyRequest().authenticated() // Toutes les autres requêtes doivent être authentifiées
                 )
                 .httpBasic(Customizer.withDefaults())

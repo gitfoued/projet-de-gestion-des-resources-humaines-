@@ -37,7 +37,7 @@ export default function Navbar() {
                         </Link>
                     </div>
                 </div>
-                <Link to="/logout" className="flex items-center text-white py-2 px-4 mt-2 rounded-md hover:bg-green-600">
+                <Link to="/logout" className="flex items-center text-white py-2 px-4 mb-16 rounded-md hover:bg-green-600">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707a1 1 0 00-1.414-1.414L11 10.586V8a1 1 0 10-2 0v2.586L7.707 9.707a1 1 0 10-1.414 1.414l3.5 3.5a1 1 0 001.414 0l3.5-3.5z" clipRule="evenodd" />
                     </svg>
@@ -45,15 +45,7 @@ export default function Navbar() {
                 </Link>
             </div>
 
-            <div className="flex-1 p-6 ">
-                <div className="mb-4 ">
-                    <input 
-                        type="text" 
-                        placeholder="Rechercher..." 
-                        className=" w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:border-indigo-500 "
-                    />
-                </div>
-            </div>
+          
         </div>
     );
 }
