@@ -13,5 +13,5 @@ public interface AbsenceRepository extends JpaRepository<Absence, Integer> {
     // Vous pouvez ajouter des méthodes personnalisées si nécessaire
     @Query("SELECT a FROM Absence a WHERE a.department.id = :departmentId")
     List<Absence> findByDepartmentId(Integer departmentId);
-    List<Absence> findAllByAbsenceDateBetween(LocalDate startDate, LocalDate endDate);
+    void deleteByEmployeeId(Long employeeId);
 }
