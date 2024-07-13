@@ -1,7 +1,9 @@
 package com.example.server.services;
 
 import com.example.server.entities.Empolyee;
+import com.example.server.repositories.AbsenceRepository;
 import com.example.server.repositories.EmployeeRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +16,8 @@ import java.util.Optional;
 public class EmpolyeeService {
 
     private final EmployeeRepository employeeRepository;
-
+    @Autowired
+    private AbsenceRepository absenceRepository;
     @Autowired
     public EmpolyeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -65,8 +68,13 @@ public class EmpolyeeService {
         return employee.orElse(null);
     }
 
+    @Transactional
     public void deleteEmployee(Integer id) {
-        employeeRepository.deleteById(Long.valueOf(id));
+        Long employeeId = Long.valueOf(id);
+        // Supprimer les enregistrements dépendants dans la table absences
+        absenceRepository.deleteByEmployeeId(employeeId);
+        // Supprimer l'employé
+        employeeRepository.deleteById(employeeId);
     }
 
     public Page<Empolyee> getAllEmployees(Pageable pageable) {

@@ -7,6 +7,9 @@ import Signup from "./Auth/Signup"
 import Navbar from './Components/Navbar';
 import EmployeesList from './Components/EmployeesList';
 import Dashboardpage from './Pages/Dashboardpage';
+import EmployeeSearch from './Components/EmployeeSearch';
+import EmployeePage from './Pages/EmployeePage';
+
 class App extends Component {
  render(){
   return (
@@ -15,7 +18,7 @@ class App extends Component {
     
     <Routes>
  
-     <Route path='/' exact element={<EmployeesList/> }  />
+     <Route path='/' exact element={<EmployeePage/> }  />
      
      </Routes>
      
