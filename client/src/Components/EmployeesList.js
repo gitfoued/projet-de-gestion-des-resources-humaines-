@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-
+import { useNavigate } from 'react-router-dom';
 const EmployeesList = () => {
     const [employees, setEmployees] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [employeesPerPage] = useState(8); // Nombre d'employés par page
     const [searchTerm, setSearchTerm] = useState('');
-
+    const navigate = useNavigate();
     useEffect(() => {
         fetchEmployees();
     }, [searchTerm]);
@@ -45,8 +45,7 @@ const EmployeesList = () => {
     };
 
     const viewEmployeeDetails = (id) => {
-       
-        console.log(`Afficher les détails de l'employé avec ID: ${id}`);
+        navigate(`/employee/${id}`);
     };
 
     // Index de début et de fin de la page actuelle

@@ -11,7 +11,7 @@ export default function Navbar() {
                     </div>
                     <p className="text-white text-center bg-transparent mb-8 mt-8 opacity-30">Modules</p>
                     <div>
-                        <Link to="/" className="flex items-center text-white py-2 px-4 mb-2 rounded-md hover:bg-green-600">
+                        <Link to="/Dashboardpage" className="flex items-center text-white py-2 px-4 mb-2 rounded-md hover:bg-green-600">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10 2a2 2 0 00-2 2v4H6a2 2 0 00-2 2v6h12v-6a2 2 0 00-2-2h-2V4a2 2 0 00-2-2z" />
                             </svg>

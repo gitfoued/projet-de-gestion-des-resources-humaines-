@@ -1,8 +1,12 @@
 package com.example.server.services;
 
+import com.example.server.entities.Department;
 import com.example.server.entities.Empolyee;
+import com.example.server.entities.Role;
 import com.example.server.repositories.AbsenceRepository;
+import com.example.server.repositories.DepartmentRepository;
 import com.example.server.repositories.EmployeeRepository;
+import com.example.server.repositories.RoleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +22,8 @@ public class EmpolyeeService {
     private final EmployeeRepository employeeRepository;
     @Autowired
     private AbsenceRepository absenceRepository;
+    private  DepartmentRepository departmentRepository;
+    private RoleRepository roleRepository;
     @Autowired
     public EmpolyeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -25,7 +31,8 @@ public class EmpolyeeService {
 
     public Empolyee saveEmployee(Empolyee employee) {
         validateEmployee(employee);
-
+        System.out.println("DepartmentId received in service: {}"+ employee.getDepartment());
+        System.out.println("RoleId received in service: {}"+ employee.getRole());
         if (employee.getId() != null) {
             Optional<Empolyee> existingEmployee = employeeRepository.findById(Long.valueOf(employee.getId()));
             if (existingEmployee.isPresent()) {
@@ -42,7 +49,13 @@ public class EmpolyeeService {
                 throw new IllegalArgumentException("Email already in use");
             }
         }
+        // Load Department and Role entities from database based on IDs
+        Department department = loadDepartment(employee.getDepartment().getId());
+        Role role = loadRole(employee.getRole().getId());
 
+        // Set Department and Role to the employee
+        employee.setDepartment(department);
+        employee.setRole(role);
         return employeeRepository.save(employee);
     }
 
@@ -90,5 +103,14 @@ public class EmpolyeeService {
 
     public Long countEmployeesByDepartmentId(Long departmentId) {
         return employeeRepository.countByDepartmentId(departmentId);
+    }
+    private Department loadDepartment(Integer departmentId) {
+        return departmentRepository.findById(Long.valueOf(departmentId))
+                .orElseThrow(() -> new IllegalArgumentException("Department not found with id: " + departmentId));
+    }
+
+    private Role loadRole(Integer roleId) {
+        return roleRepository.findById(Long.valueOf(roleId))
+                .orElseThrow(() -> new IllegalArgumentException("Role not found with id: " + roleId));
     }
 }

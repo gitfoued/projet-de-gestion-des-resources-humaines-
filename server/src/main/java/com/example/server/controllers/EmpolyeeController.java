@@ -23,9 +23,11 @@ public class EmpolyeeController {
     @PostMapping
     public ResponseEntity<Empolyee> createEmployee(@RequestBody Empolyee employee) {
         try {
+            System.out.println("Received employee data: " );
             Empolyee savedEmployee = employeeService.saveEmployee(employee);
             return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
+            System.out.println("Error creating employee: {}"+ e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
