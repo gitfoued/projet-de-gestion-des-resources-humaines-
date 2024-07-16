@@ -19,6 +19,7 @@ public class Department {
 
 
     public Department() {}
+
     public Department(String name, String description, String departmentHead) {
         this.name = name;
         this.description = description;
@@ -56,8 +57,5 @@ public class Department {
     public void setDepartmentHead(String departmentHead) {
         this.departmentHead = departmentHead;
     }
-
-
-
 }
 

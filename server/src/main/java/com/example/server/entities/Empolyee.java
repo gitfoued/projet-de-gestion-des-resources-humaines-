@@ -59,7 +59,22 @@ public class Empolyee {
         this.address = address;
         this.dateOfBirth = dateOfBirth;
     }
-
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", hireDate=" + hireDate +
+                ", salary=" + salary +
+                ", department=" + department +
+                ", role=" + role +
+                ", address='" + address + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                '}';
+    }
 
 
     public Integer getId() {
