@@ -34,7 +34,8 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/api/employees/**").permitAll() // Permettre les requêtes non authentifiées pour les routes d'authentification
+                        .requestMatchers("/api/employees/**").permitAll()
+                        .requestMatchers("/api/departments/**").permitAll()// Permettre les requêtes non authentifiées pour les routes d'authentification
                         .anyRequest().authenticated() // Toutes les autres requêtes doivent être authentifiées
                 )
                 .httpBasic(Customizer.withDefaults())

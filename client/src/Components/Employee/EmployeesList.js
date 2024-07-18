@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faInfoCircle, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+
 const EmployeesList = () => {
     const [employees, setEmployees] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [employeesPerPage] = useState(8); // Nombre d'employés par page
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
+
     useEffect(() => {
         fetchEmployees();
     }, [searchTerm]);
@@ -22,25 +24,23 @@ const EmployeesList = () => {
             const response = await axios.get(url);
 
             if (response.data && response.data.content) {
-                setEmployees(response.data.content); // Accéder à la propriété `content` qui contient le tableau d'employés
+                setEmployees(response.data.content);
             } else {
                 setEmployees([]);
                 console.log('No employees found in response.');
             }
         } catch (error) {
             console.error('Error fetching employees:', error);
-            setEmployees([]); // En cas d'erreur, définir employees comme un tableau vide
+            setEmployees([]);
         }
     };
 
     const deleteEmployee = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/api/employees/${id}`);
-            console.log(`Employé avec ID: ${id} supprimé`);
-            // Mettre à jour la liste des employés après suppression
+            await axios.delete(`http://localhost:5000/api/employees/${id}`);
             setEmployees(employees.filter(employee => employee.id !== id));
         } catch (error) {
-            console.error('Erreur lors de la suppression de l\'employé:', error);
+            console.error('Error deleting employee:', error);
         }
     };
 
@@ -48,21 +48,20 @@ const EmployeesList = () => {
         navigate(`/employee/${id}`);
     };
 
-    // Index de début et de fin de la page actuelle
+    const editEmployee = (id) => {
+        navigate(`/modifier/${id}`);
+    };
+
     const indexOfLastEmployee = currentPage * employeesPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
-    const currentEmployees = employees ? employees.slice(indexOfFirstEmployee, indexOfLastEmployee) : [];
+    const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
-    // Fonction pour changer de page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-   
-    
 
-    // Fonction pour gérer la recherche en temps réel
     const handleSearch = (event) => {
         const query = event.target.value;
         setSearchTerm(query);
-        setCurrentPage(1); // Revenir à la première page lors d'une nouvelle recherche
+        setCurrentPage(1);
     };
 
     return (
@@ -87,11 +86,11 @@ const EmployeesList = () => {
                             <th className="w-3/12 px-4 py-2">Email</th>
                             <th className="w-2/12 px-4 py-2">Département</th>
                             <th className="w-2/12 px-4 py-2">Rôle</th>
-                            <th className="w-1/12 px-4 py-2">Actions</th>
+                            <th className="w-2/12 px-4 py-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(currentEmployees) && currentEmployees.length > 0 ? (
+                        {currentEmployees.length > 0 ? (
                             currentEmployees.map((employee) => (
                                 <tr key={employee.id} className="border-t">
                                     <td className="border px-4 py-2">{employee.id}</td>
@@ -102,10 +101,13 @@ const EmployeesList = () => {
                                     <td className="border px-4 py-2">{employee.role.name}</td>
                                     <td className="border px-4 py-2 flex justify-around">
                                         <button onClick={() => viewEmployeeDetails(employee.id)}>
-                                            <FontAwesomeIcon icon={faInfoCircle} className="text-blue-500" />
+                                            <FontAwesomeIcon icon={faInfoCircle} className="text-blue-500 cursor-pointer" />
                                         </button>
                                         <button onClick={() => deleteEmployee(employee.id)}>
-                                            <FontAwesomeIcon icon={faTrash} className="text-red-500" />
+                                            <FontAwesomeIcon icon={faTrash} className="text-red-500 cursor-pointer" />
+                                        </button>
+                                        <button onClick={() => editEmployee(employee.id)}>
+                                            <FontAwesomeIcon icon={faEdit} className="text-yellow-500 cursor-pointer" />
                                         </button>
                                     </td>
                                 </tr>
@@ -118,7 +120,6 @@ const EmployeesList = () => {
                     </tbody>
                 </table>
             </div>
-            {/* Pagination */}
             <div className="mt-4 flex justify-center">
                 <button
                     onClick={() => paginate(currentPage - 1)}

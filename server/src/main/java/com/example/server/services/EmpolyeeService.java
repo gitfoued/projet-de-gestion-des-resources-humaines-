@@ -20,19 +20,27 @@ import java.util.Optional;
 public class EmpolyeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final AbsenceRepository absenceRepository;
+    private final DepartmentRepository departmentRepository;
+    private final RoleRepository roleRepository;
+
     @Autowired
-    private AbsenceRepository absenceRepository;
-    private  DepartmentRepository departmentRepository;
-    private RoleRepository roleRepository;
-    @Autowired
-    public EmpolyeeService(EmployeeRepository employeeRepository) {
+    public EmpolyeeService(EmployeeRepository employeeRepository, AbsenceRepository absenceRepository,
+                           DepartmentRepository departmentRepository, RoleRepository roleRepository) {
         this.employeeRepository = employeeRepository;
+        this.absenceRepository = absenceRepository;
+        this.departmentRepository = departmentRepository;
+        this.roleRepository = roleRepository;
     }
 
     public Empolyee saveEmployee(Empolyee employee) {
         validateEmployee(employee);
-        System.out.println("DepartmentId received in service: {}"+ employee.getDepartment());
-        System.out.println("RoleId received in service: {}"+ employee.getRole());
+
+        // Logs pour vérifier les IDs de Department et Role
+        System.out.println("Department ID received in service: " + (employee.getDepartment() != null ? employee.getDepartment().getId() : null));
+        System.out.println("Role ID received in service: " + (employee.getRole() != null ? employee.getRole().getId() : null));
+
+        // Validation de l'employé existant par ID
         if (employee.getId() != null) {
             Optional<Empolyee> existingEmployee = employeeRepository.findById(Long.valueOf(employee.getId()));
             if (existingEmployee.isPresent()) {
@@ -49,15 +57,18 @@ public class EmpolyeeService {
                 throw new IllegalArgumentException("Email already in use");
             }
         }
-        // Load Department and Role entities from database based on IDs
+
+        // Charger les entités Department et Role à partir de la base de données
         Department department = loadDepartment(employee.getDepartment().getId());
         Role role = loadRole(employee.getRole().getId());
 
-        // Set Department and Role to the employee
+        // Assigner Department et Role à l'employé
         employee.setDepartment(department);
         employee.setRole(role);
+
         return employeeRepository.save(employee);
     }
+
 
     private void validateEmployee(Empolyee employee) {
         if (employee.getEmail() == null || employee.getEmail().isEmpty()) {
