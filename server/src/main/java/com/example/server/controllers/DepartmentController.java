@@ -34,7 +34,16 @@ public class DepartmentController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Department> updateDepartment(@PathVariable Integer id, @RequestBody Department department) {
+        try {
+            department.setId(id); // Assurez-vous que setId prend un Long
+            Department updatedDepartment = departmentService.saveDepartment(department);
+            return ResponseEntity.ok(updatedDepartment);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
     // Ajouter ou modifier un département
     @PostMapping
     public ResponseEntity<Department> createOrUpdateDepartment(@RequestBody Department department) {

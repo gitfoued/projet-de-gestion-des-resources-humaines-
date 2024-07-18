@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +21,19 @@ public class EmpolyeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Empolyee> createEmployee(@RequestBody Empolyee employee) {
         try {
-            System.out.println("Received employee data: " );
+            System.out.println("Received employee data: " + employee);
+            Integer departmentId = employee.getDepartment().getId();
+            Integer roleId = employee.getRole().getId();
+            System.out.println("Department ID: " + departmentId);
+            System.out.println("Role ID: " + roleId);
+
             Empolyee savedEmployee = employeeService.saveEmployee(employee);
             return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
-            System.out.println("Error creating employee: {}"+ e.getMessage());
+            System.out.println("Error creating employee: " + e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }

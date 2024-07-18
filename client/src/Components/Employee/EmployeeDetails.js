@@ -59,5 +59,4 @@ const EmployeeDetails = () => {
         </div>
     );
 };
-
 export default EmployeeDetails;

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import SuccessMessage from '../Components/SuccessMessage';
 
 export default function Signup() {
     const [errors, setErrors] = useState({});
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [values, setValues] = useState({
     username: '',
     lastname: '',
@@ -32,6 +33,7 @@ export default function Signup() {
       axios.post('http://localhost:5000/auth/register', values)
         .then((res) => {
           if (res.status === 200) {
+            setShowSuccessMessage(true)
             console.log('Success');
             console.log(res.data);
           } else {
@@ -68,6 +70,12 @@ export default function Signup() {
           <input type="text" className="placeholder-black px-4 py-2 w-full outline-none border-2 border-gray-300 rounded-md mb-4 transition duration-300 focus:border-indigo-500" placeholder="Role" required value={values.role} onChange={(e) => setValues({ ...values, role: e.target.value })} />
           <button className="outline-none border-none bg-indigo-600 hover:bg-indigo-700 w-full h-12 text-white rounded-md cursor-pointer transition duration-300 font-bold mb-4" type="submit">Sign up</button>
         </form>
+        {showSuccessMessage && (
+                <SuccessMessage
+                    message="Employé ajouté avec succès !"
+                    redirectPath="/" 
+                />
+            )}
         <div className="flex items-center w-full mb-4">
           <div className="bg-gray-300 flex-grow h-[1px]"></div>
           <h3 className="px-2">OR</h3>

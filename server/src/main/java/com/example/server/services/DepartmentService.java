@@ -26,6 +26,8 @@ public class DepartmentService {
                 .map(department -> new DepartmentOverview(
                         department.getId(),
                         department.getName(),
+                        department.getDescription(),
+                        department.getDepartmentHead(),
                         employeeService.countEmployeesByDepartmentId(Long.valueOf(department.getId()))
                 ))
                 .toList();
@@ -36,7 +38,13 @@ public class DepartmentService {
         if (departmentOpt.isPresent()) {
             Department department = departmentOpt.get();
             List<Empolyee> employees = employeeService.findByDepartmentId(Long.valueOf(department.getId()));
-            return new DepartmentDetail(department.getId(), department.getName(), employees);
+            return new DepartmentDetail(
+                    department.getId(),
+                    department.getName(),
+                    department.getDescription(),
+                    department.getDepartmentHead(),
+                    employees
+            );
         } else {
             throw new IllegalArgumentException("Department with given ID does not exist");
         }
