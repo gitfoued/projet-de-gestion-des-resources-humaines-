@@ -1,5 +1,4 @@
 package com.example.server.config;
-import com.example.server.config.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +7,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -35,7 +35,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/api/employees/**").permitAll()
-                        .requestMatchers("/api/departments/**").permitAll()// Permettre les requêtes non authentifiées pour les routes d'authentification
+                        .requestMatchers("/api/departments/**").permitAll()
+                        .requestMatchers("/api/roles/**").permitAll()
+                        .requestMatchers("/api/user/role").permitAll()// Permettre les requêtes non authentifiées pour les routes d'authentification
                         .anyRequest().authenticated() // Toutes les autres requêtes doivent être authentifiées
                 )
                 .httpBasic(Customizer.withDefaults())

@@ -37,7 +37,7 @@ public class DepartmentController {
     @PutMapping("/{id}")
     public ResponseEntity<Department> updateDepartment(@PathVariable Integer id, @RequestBody Department department) {
         try {
-            department.setId(id); // Assurez-vous que setId prend un Long
+            department.setId(id);
             Department updatedDepartment = departmentService.saveDepartment(department);
             return ResponseEntity.ok(updatedDepartment);
         } catch (IllegalArgumentException e) {

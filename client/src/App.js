@@ -13,6 +13,11 @@ import DepartmentPage from './Pages/DepartmentPage';
 import DepartmentDetails from './Components/Department/DepartmentDetails';
 import AddDepartmentPage from './Components/Department/AddDepartmentPage';
 import EditDepartmentPage from './Components/Department/EditDepartmentPage';
+import RolesPage from './Pages/RolesPage';
+import RoleDetails from './Components/Roles/RoleDetails';
+import AddRolePage from './Components/Roles/AddRolePage';
+import EditRolePage from './Components/Roles/EditRolePage';
+import Logout from './Auth/Logout';
 class App extends Component {
  render(){
   return (
@@ -31,6 +36,11 @@ class App extends Component {
      <Route path="/department/:id" element={<DepartmentDetails/>} />
      <Route path="/ajouterdepartment" element={<AddDepartmentPage/>} />
      <Route path="/modifierdepartment/:id" element={<EditDepartmentPage/>} />
+     <Route path="/roles" element={<RolesPage/>} />
+     <Route path="/role/:id" element={<RoleDetails/>} />
+     <Route path="/ajouterrole" element={<AddRolePage/>} />
+     <Route path="/modifierrole/:id" element={<EditRolePage/>} />
+     <Route path="/logout" element={<Logout/>} />
      </Routes>
     </BrowserRouter>
     </>

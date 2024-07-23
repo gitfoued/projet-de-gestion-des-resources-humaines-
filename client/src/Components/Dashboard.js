@@ -1,9 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Bar, Line, Pie } from 'react-chartjs-2'; // Assuming you are using chart.js for charts
 import 'chart.js/auto';
 
-export default function Dashboard({ userName }) {
+export default function Dashboard() {
+    const name=localStorage.getItem("nom")
+    const lastname=localStorage.getItem("lastname")
+    const userName=name+' '+lastname + '!';
     const absenteeismData = {
         labels: ['Department A', 'Department B', 'Department C'],
         datasets: [
