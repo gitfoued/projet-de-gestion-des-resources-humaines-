@@ -38,6 +38,17 @@ public class RoleController {
     public Role saveRole(@RequestBody Role role) {
         return roleService.saveRole(role);
     }
+    // Modifier un rôle
+    @PutMapping("/{id}")
+    public ResponseEntity<Role> updateRole(@PathVariable Integer id, @RequestBody Role role) {
+        try {
+            role.setId(id); // Assurez-vous que setId prend un Integer
+            Role updatedRole = roleService.saveRole(role);
+            return ResponseEntity.ok(updatedRole);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 
     // Supprimer un rôle
     @DeleteMapping("/{id}")

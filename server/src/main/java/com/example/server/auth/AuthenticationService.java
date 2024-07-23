@@ -96,7 +96,6 @@ public class AuthenticationService {
             throw e; // Relancer l'exception pour la gestion d'erreur appropriée
         }
 
-
         var userOptional = repository.findByEmail(request.getEmail());
         if (userOptional.isPresent()) {
             var user = userOptional.get();
@@ -112,13 +111,14 @@ public class AuthenticationService {
 
             return AuthenticationResponse.builder()
                     .accessToken(jwtToken)
+                    .firstName(user.getUsername())
+                    .lastName(user.getLastName())
                     .build();
         } else {
             System.out.println("User not found for email: " + request.getEmail());
             throw new RuntimeException("User not found");
         }
     }
-
     private void saveUserToken(User user, String jwtToken) {
         var token = Token.builder()
                 .user(user)

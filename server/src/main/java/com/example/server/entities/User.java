@@ -34,6 +34,7 @@ public class User implements UserDetails {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name = "last_name", nullable = false)
@@ -41,6 +42,7 @@ public class User implements UserDetails {
 
     @Column(name = "last_login_date")
     private Date lastLoginDate;
+
 
 
 
@@ -72,7 +74,10 @@ public class User implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
-
+    @Override
+    public String getUsername() {
+        return email;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.getName()));
