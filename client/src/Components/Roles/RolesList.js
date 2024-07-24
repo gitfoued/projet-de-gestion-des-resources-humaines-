@@ -3,11 +3,12 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faInfoCircle, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import ProtectedButton from '../../ProtetctedButton';
 
 const RolesList = () => {
     const [roles, setRoles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [rolesPerPage] = useState(8); // Nombre de rôles par page
+    const [rolesPerPage] = useState(12); // Nombre de rôles par page
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -75,9 +76,9 @@ const RolesList = () => {
                                         <button onClick={() => viewRoleDetails(role.id)}>
                                             <FontAwesomeIcon icon={faInfoCircle} className="text-blue-500 cursor-pointer" />
                                         </button>
-                                        <button onClick={() => deleteRole(role.id)}>
+                                        <ProtectedButton requiredRole="Manager" onClick={() => deleteRole(role.id)}>
                                             <FontAwesomeIcon icon={faTrash} className="text-red-500 cursor-pointer" />
-                                        </button>
+                                        </ProtectedButton>
                                         <button onClick={() => editRole(role.id)}>
                                             <FontAwesomeIcon icon={faEdit} className="text-yellow-500 cursor-pointer" />
                                         </button>

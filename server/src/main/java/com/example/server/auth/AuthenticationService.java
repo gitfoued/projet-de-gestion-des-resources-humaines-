@@ -113,6 +113,7 @@ public class AuthenticationService {
                     .accessToken(jwtToken)
                     .firstName(user.getUsername())
                     .lastName(user.getLastName())
+                    .role(user.getRole())
                     .build();
         } else {
             System.out.println("User not found for email: " + request.getEmail());

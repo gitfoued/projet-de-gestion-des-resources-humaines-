@@ -43,10 +43,12 @@ export default function Login() {
                 const token = res.data.access_token;
                 const name=res.data.firstName;
                 const lastname=res.data.lastName;
+                const role=res.data.role.name;
                 if (token) {
                     localStorage.setItem('monToken', token);
                     localStorage.setItem('nom',name);
                     localStorage.setItem('lastname',lastname);
+                    localStorage.setItem('role',role)
                     // Navigate to DashboardPage after successful login
                     navigate('/Dashboardpage');
                 } else {

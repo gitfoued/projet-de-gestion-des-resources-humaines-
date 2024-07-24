@@ -20,4 +20,6 @@ public interface EmployeeRepository extends JpaRepository<Empolyee, Long> {
 
     List<Empolyee> findByDepartmentId(Long departmentId);
     Long countByDepartmentId(Long departmentId);
+
+    List<Empolyee> findByRoleId(Long roleId);
 }

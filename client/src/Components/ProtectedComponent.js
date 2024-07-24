@@ -1,15 +1,14 @@
-// ProtectedComponent.js
 import React from 'react';
-import { useAuth } from './AuthProvider';
+import { Navigate } from 'react-router-dom';
 
-const ProtectedComponent = ({ roleRequired, children }) => {
-    const userRole = useAuth();
+const ProtectedComponent = ({ children, requiredRole }) => {
+  const role = localStorage.getItem('role');
 
-    if (userRole !== roleRequired) {
-        return <div>You do not have permission to view this page.</div>;
-    }
+  if (role !== requiredRole) {
+    return <Navigate to="/not-authorized" />;
+  }
 
-    return <>{children}</>;
+  return children;
 };
 
 export default ProtectedComponent;

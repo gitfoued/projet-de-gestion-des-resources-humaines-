@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SuccessMessage from '../SuccessMessage';
 import ProtectedComponent from '../ProtectedComponent';
-import { ROLES } from '../Roles';
+
+
 const AddPage = () => {
     const navigate = useNavigate();
     const [employee, setEmployee] = useState({
@@ -12,24 +13,20 @@ const AddPage = () => {
         email: '',
         phoneNumber: '',
         hireDate: '',
-        salary: '', // Keep salary as a string
-        departmentId: '', // Department ID as a string
-        roleId: '', // Role ID as a string
-        department: {
-            id: 0
-        },
-        role: {
-            id: 0
-        },
+        salary: '', 
+        departmentId: '',
+        roleId: '',
+        department: { id: 0 },
+        role: { id: 0 },
         address: '',
         dateOfBirth: ''
     });
 
     const [errors, setErrors] = useState({});
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
     const validate = () => {
         let errors = {};
-
         if (!employee.firstName) {
             errors.firstName = 'Le prénom est requis';
         }
@@ -55,7 +52,6 @@ const AddPage = () => {
         return Object.keys(errors).length === 0;
     };
 
-    // Function to convert salary to decimal with two decimal places
     const formatSalary = (salary) => {
         return parseFloat(salary).toFixed(2);
     };
@@ -74,7 +70,6 @@ const AddPage = () => {
             return;
         }
 
-        // Convert salary to decimal with two decimal places
         const formattedSalary = formatSalary(employee.salary);
         const updatedEmployee = {
             ...employee,
@@ -84,7 +79,13 @@ const AddPage = () => {
         };
 
         try {
-            await axios.post('http://localhost:5000/api/employees', updatedEmployee);
+            const token = localStorage.getItem('monToken');
+            await axios.post('http://localhost:5000/api/employees', updatedEmployee, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
             setShowSuccessMessage(true);
         } catch (error) {
             console.error('Error adding employee:', error);
@@ -113,44 +114,44 @@ const AddPage = () => {
     );
 
     return (
-        <ProtectedComponent roleRequired={ROLES.MANAGER}>
-        <div className="container mx-auto p-6 flex flex-col items-center">
-            <h1 className="text-4xl font-bold text-center mb-8">Ajouter Employé</h1>
-            <form onSubmit={handleSubmit} className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <InputField name="firstName" label="Prénom" />
-                <InputField name="lastName" label="Nom" />
-                <InputField name="email" label="Email" type="email" />
-                <InputField name="phoneNumber" label="Numéro de téléphone" />
-                <InputField name="hireDate" label="Date d'embauche" type="date" />
-                <InputField name="salary" label="Salaire" />
-                <InputField name="departmentId" label="ID du Département" />
-                <InputField name="roleId" label="ID du Rôle" />
-                <InputField name="address" label="Adresse" />
-                <InputField name="dateOfBirth" label="Date de naissance" type="date" />
-                
-                <div className="flex items-center justify-between">
-                    <button
-                        type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Ajouter
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => navigate('/employees')}
-                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Annuler
-                    </button>
-                </div>
-            </form>
-            {showSuccessMessage && (
-                <SuccessMessage
-                    message="Employé ajouté avec succès !"
-                    redirectPath="/employees" 
-                />
-            )}
-        </div>
+        <ProtectedComponent requiredRole="Manager">
+            <div className="container mx-auto p-6 flex flex-col items-center">
+                <h1 className="text-4xl font-bold text-center mb-8">Ajouter Employé</h1>
+                <form onSubmit={handleSubmit} className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <InputField name="firstName" label="Prénom" />
+                    <InputField name="lastName" label="Nom" />
+                    <InputField name="email" label="Email" type="email" />
+                    <InputField name="phoneNumber" label="Numéro de téléphone" />
+                    <InputField name="hireDate" label="Date d'embauche" type="date" />
+                    <InputField name="salary" label="Salaire" />
+                    <InputField name="departmentId" label="ID du Département" />
+                    <InputField name="roleId" label="ID du Rôle" />
+                    <InputField name="address" label="Adresse" />
+                    <InputField name="dateOfBirth" label="Date de naissance" type="date" />
+                    
+                    <div className="flex items-center justify-between">
+                        <button
+                            type="submit"
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        >
+                            Ajouter
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => navigate('/employees')}
+                            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        >
+                            Annuler
+                        </button>
+                    </div>
+                </form>
+                {showSuccessMessage && (
+                    <SuccessMessage
+                        message="Employé ajouté avec succès !"
+                        redirectPath="/employees" 
+                    />
+                )}
+            </div>
         </ProtectedComponent>
     );
 };

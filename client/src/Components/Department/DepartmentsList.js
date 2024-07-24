@@ -3,11 +3,12 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faInfoCircle, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import ProtectedButton from '../../ProtetctedButton';
 
 const DepartmentsList = () => {
     const [departments, setDepartments] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [departmentsPerPage] = useState(8); // Nombre de départements par page
+    const [departmentsPerPage] = useState(12); // Nombre de départements par page
     const [confirmDeleteId, setConfirmDeleteId] = useState(null); // Pour gérer l'ID du département à supprimer
     const navigate = useNavigate();
 
@@ -91,9 +92,10 @@ const DepartmentsList = () => {
                                         <button onClick={() => viewDepartmentDetails(department.id)}>
                                             <FontAwesomeIcon icon={faInfoCircle} className="text-blue-500 cursor-pointer" />
                                         </button>
-                                        <button onClick={() => handleDeleteClick(department.id)}>
+                                       
+                                        <ProtectedButton requiredRole="Manager" onClick={() => handleDeleteClick(department.id)}>
                                             <FontAwesomeIcon icon={faTrash} className="text-red-500 cursor-pointer" />
-                                        </button>
+                                        </ProtectedButton>
                                         <button onClick={() => editDepartment(department.id)}>
                                             <FontAwesomeIcon icon={faEdit} className="text-yellow-500 cursor-pointer" />
                                         </button>

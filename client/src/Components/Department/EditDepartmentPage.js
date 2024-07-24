@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import SuccessMessage from '../SuccessMessage';
-
+import ProtectedComponent from '../ProtectedComponent';
 const EditDepartmentPage = () => {
     const { id } = useParams();
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -41,6 +41,7 @@ const EditDepartmentPage = () => {
     };
 
     return (
+        <ProtectedComponent requiredRole="Manager">
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-4">Modifier un Département</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -87,6 +88,7 @@ const EditDepartmentPage = () => {
                 />
             )}
         </div>
+        </ProtectedComponent>
     );
 };
 
