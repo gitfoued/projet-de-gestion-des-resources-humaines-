@@ -1,10 +1,14 @@
-// src/main/java/com/example/server/services/RoleService.java
+
 package com.example.server.services;
 
 
 import com.example.server.dtos.Roledto;
+import com.example.server.entities.Empolyee;
 import com.example.server.entities.Role;
+import com.example.server.entities.User;
+import com.example.server.repositories.EmployeeRepository;
 import com.example.server.repositories.RoleRepository;
+import com.example.server.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,10 @@ public class RoleService {
 
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public List<Roledto> getAllRoles() {
         List<Role> roles = roleRepository.findAll();
@@ -41,8 +49,29 @@ public class RoleService {
     }
 
     public void deleteRole(Integer id) {
-        roleRepository.deleteById(Long.valueOf(id));
+        Long roleId = Long.valueOf(id);
+
+        // Check if the role exists
+        if (!roleRepository.existsById(roleId)) {
+            throw new IllegalArgumentException("Role not found with id: " + id);
+        }
+
+        // Handle users with the role
+        List<User> usersWithRole = userRepository.findByRoleId(roleId);
+        for (User user : usersWithRole) {
+            userRepository.delete(user); // Delete the user
+        }
+
+        // Handle employees with the role
+        List<Empolyee> employeesWithRole = employeeRepository.findByRoleId(roleId);
+        for (Empolyee employee : employeesWithRole) {
+            employeeRepository.delete(employee); // Delete the employee
+        }
+
+        // Now delete the role
+        roleRepository.deleteById(roleId);
     }
+
 
     private void validateRole(Role role) {
         if (role.getId() != null) {

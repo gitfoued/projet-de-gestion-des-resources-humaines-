@@ -3,11 +3,12 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faInfoCircle, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import ProtectedButton from '../../ProtetctedButton';
 
 const EmployeesList = () => {
     const [employees, setEmployees] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [employeesPerPage] = useState(8); // Nombre d'employés par page
+    const [employeesPerPage] = useState(12); // Nombre d'employés par page
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
@@ -103,9 +104,11 @@ const EmployeesList = () => {
                                         <button onClick={() => viewEmployeeDetails(employee.id)}>
                                             <FontAwesomeIcon icon={faInfoCircle} className="text-blue-500 cursor-pointer" />
                                         </button>
-                                        <button onClick={() => deleteEmployee(employee.id)}>
+                                        
+                                        <ProtectedButton requiredRole="Manager" onClick={() => deleteEmployee(employee.id)}>
                                             <FontAwesomeIcon icon={faTrash} className="text-red-500 cursor-pointer" />
-                                        </button>
+                                        </ProtectedButton>
+                                        
                                         <button onClick={() => editEmployee(employee.id)}>
                                             <FontAwesomeIcon icon={faEdit} className="text-yellow-500 cursor-pointer" />
                                         </button>

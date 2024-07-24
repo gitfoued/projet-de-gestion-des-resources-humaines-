@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SuccessMessage from '../SuccessMessage';
-
+import ProtectedComponent from '../ProtectedComponent';
 const AddDepartmentPage = () => {
     const navigate = useNavigate();
     const [department, setDepartment] = useState({
@@ -51,6 +51,7 @@ const AddDepartmentPage = () => {
     };
 
     return (
+        <ProtectedComponent requiredRole="Manager">
         <div className="container mx-auto p-6 flex flex-col items-center">
             <h1 className="text-4xl font-bold text-center mb-8">Ajouter Département</h1>
             <form onSubmit={handleSubmit} className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -115,6 +116,7 @@ const AddDepartmentPage = () => {
                 />
             )}
         </div>
+        </ProtectedComponent>
     );
 };
 

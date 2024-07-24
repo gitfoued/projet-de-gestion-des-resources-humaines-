@@ -37,7 +37,11 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/employees/**").permitAll()
                         .requestMatchers("/api/departments/**").permitAll()
                         .requestMatchers("/api/roles/**").permitAll()
-                        .requestMatchers("/api/user/role").permitAll()// Permettre les requêtes non authentifiées pour les routes d'authentification
+                        .requestMatchers("/api/user/role").permitAll()
+                        .requestMatchers("/api/absences/**").permitAll()
+                        .requestMatchers("/api/overtime/**").permitAll()
+                        .requestMatchers("/api/salaries/**").permitAll()
+                        .requestMatchers("/api/recruitments/**").permitAll()// Permettre les requêtes non authentifiées pour les routes d'authentification
                         .anyRequest().authenticated() // Toutes les autres requêtes doivent être authentifiées
                 )
                 .httpBasic(Customizer.withDefaults())
